@@ -8,7 +8,7 @@ body {
     text-align: center;
 }
 
-.cell {
+.cell, input {
     display: inline-block;
     border: 1px solid black;
     background-color: blue;
@@ -34,4 +34,8 @@ button {
     font-size: 1.2em;
     cursor: pointer;
     border-radius: 5px;
+}
+
+input {
+    text-align: center;
 }

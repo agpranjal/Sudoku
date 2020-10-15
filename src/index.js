@@ -30,45 +30,65 @@ class SudokuVisualizer extends Sudoku {
         for (let i=0; i<animations.length; i++) {
             setTimeout(() => {
                 let [row, col, value, status] = animations[i];
-                grid[row*9+col].firstChild.innerHTML = value;
+                grid[row*9+col].firstChild.value = value;
                 if (status) {
                     grid[row*9+col].firstChild.style.color = "white";
-                    grid[row*9+col].style.backgroundColor = "green";
+                    grid[row*9+col].firstChild.style.backgroundColor = "green";
                 }
                 else {
                     grid[row*9+col].firstChild.style.color = "red";
-                    grid[row*9+col].style.backgroundColor = "red";
+                    grid[row*9+col].firstChild.style.backgroundColor = "red";
                 }
             }, this.state.animationSpeed*i);
         }
     }
 
+    handleInputChange = (e, rowIndex, colIndex) => {
+        let arr = this.state.grid.slice();
+        arr[rowIndex][colIndex] = e.target.value;
+        this.setState({grid: arr});
+    }
+
     render() {
-        let arr = this.state.grid.map((row) => {
-            return row.map((e) => {
+        return (
+        <div>
+            <h1>Sudoku Visualizer (backtracking)</h1>
+            <ShowGrid grid={this.state.grid} handleInputChange={this.handleInputChange} />
+            <button type="button" onClick={this.showAnimation}>Solve</button>
+        </div>
+        );
+    }
+}
+
+
+// for displaying the grid on screen
+class ShowGrid extends React.Component {
+    constructor(props) {
+        super(props);
+
+        let arr = this.props.grid.map((row, rowIndex) => {
+            return row.map((value, colIndex) => {
+
                 return (
                     <div className="cell">
                         {
-                            e == 0 ? <span id="cell-element" style={{color: "blue"}}>0</span> : <span id="cell-element">{e}</span>
+                            value == 0 ? <input key={rowIndex*9+colIndex} className="cell-element" onChange={(e) => {  this.props.handleInputChange(e, rowIndex, colIndex); } } style={{color: "blue"}} value={value} /> : <input key={rowIndex*9+colIndex} className="cell-element" onChange={(e) => { this.props.handleInputChange(e, rowIndex, colIndex); }} value={value}/>
                         }
                     </div>
                 );
             });
         });
 
-        let showGrid = [];
+        this.showGrid = [];
         for (let i=0; i<9; i++) {
-            showGrid.push(arr[i]);
-            showGrid.push(<br/>);
+            this.showGrid.push(arr[i]);
+            this.showGrid.push(<br/>);
         }
 
-        return (
-        <div>
-            <h1>Sudoku Visualizer (backtracking)</h1>
-            {showGrid}
-            <button type="button" onClick={this.showAnimation}>Solve</button>
-        </div>
-        );
+    }
+
+    render() {
+        return this.showGrid;
     }
 }
 
