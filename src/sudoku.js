@@ -1,6 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import "./app.css";
 
 class Sudoku extends React.Component {
     constructor(props) {
@@ -17,16 +15,17 @@ class Sudoku extends React.Component {
         }
 
         let animations = [];
-        this.sudokuHelper(grid, 0, 0, zeros, animations);
+        if (!this.sudokuHelper(grid, 0, 0, zeros, animations))
+            animations = [];
         
         return animations;
     }
 
     sudokuHelper = (grid, row, col, zeros, animations) => {
-        if (zeros === 0) 
+        if (zeros == 0) 
             return true;
 
-        if (row == 9)
+        if (row == 9) 
             return false;
 
         if (col == 9)
@@ -42,7 +41,7 @@ class Sudoku extends React.Component {
                         return true;
 
                     grid[row][col] = 0;
-                    animations.push([row, col, 0, false]);
+                    animations.push([row, col, " ", false]);
                 }
             }
         } else {
@@ -56,13 +55,13 @@ class Sudoku extends React.Component {
     isValid = (grid, row, col, value) => {
         // check validity in row
         for (let i=0; i<9; i++) {
-            if (grid[row][i] === value)
+            if (grid[row][i] == value)
                 return false;
         }
 
         // check validity in col
         for (let i=0; i<9; i++) {
-            if (grid[i][col] === value)
+            if (grid[i][col] == value)
                 return false;
         }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Sudoku } from "./app.js";
+import { Sudoku } from "./sudoku.js";
+import "./sudoku.css";
 
 class SudokuVisualizer extends Sudoku {
     constructor(props) {
@@ -24,19 +25,29 @@ class SudokuVisualizer extends Sudoku {
     }
 
     showAnimation = () => {
+        // disable everything (to avoid user interruption)
+        document.querySelectorAll("input").forEach((e) => {
+            e.disabled = true;
+        });
+        document.querySelectorAll("button").forEach((e) => {
+            e.disabled = true;
+        })
+
         let animations = this.getSudokuAnimations(this.state.grid.slice());
         let grid = document.getElementsByClassName("cell");
+
+        if (animations.length === 0)
+            return window.alert("Solution does not exist");
 
         for (let i=0; i<animations.length; i++) {
             setTimeout(() => {
                 let [row, col, value, status] = animations[i];
                 grid[row*9+col].firstChild.value = value;
+
                 if (status) {
-                    grid[row*9+col].firstChild.style.color = "white";
                     grid[row*9+col].firstChild.style.backgroundColor = "green";
                 }
                 else {
-                    grid[row*9+col].firstChild.style.color = "red";
                     grid[row*9+col].firstChild.style.backgroundColor = "red";
                 }
             }, this.state.animationSpeed*i);
@@ -66,29 +77,29 @@ class ShowGrid extends React.Component {
     constructor(props) {
         super(props);
 
+    }
+
+    render() {
         let arr = this.props.grid.map((row, rowIndex) => {
             return row.map((value, colIndex) => {
 
                 return (
                     <div className="cell">
                         {
-                            value == 0 ? <input key={rowIndex*9+colIndex} className="cell-element" onChange={(e) => {  this.props.handleInputChange(e, rowIndex, colIndex); } } style={{color: "blue"}} value={value} /> : <input key={rowIndex*9+colIndex} className="cell-element" onChange={(e) => { this.props.handleInputChange(e, rowIndex, colIndex); }} value={value}/>
+                            value === 0 ? <input key={rowIndex*9+colIndex} className="cell-element" onChange={(e) => {  this.props.handleInputChange(e, rowIndex, colIndex); } } value=" " /> : <input key={rowIndex*9+colIndex} className="cell-element" onChange={(e) => { this.props.handleInputChange(e, rowIndex, colIndex); }} value={value}/>
                         }
                     </div>
                 );
             });
         });
 
-        this.showGrid = [];
+        let showGrid = [];
         for (let i=0; i<9; i++) {
-            this.showGrid.push(arr[i]);
-            this.showGrid.push(<br/>);
+            showGrid.push(arr[i]);
+            showGrid.push(<br/>);
         }
 
-    }
-
-    render() {
-        return this.showGrid;
+        return showGrid;
     }
 }
 
