@@ -24,19 +24,24 @@ class SudokuVisualizer extends Sudoku {
 
     }
 
-    showAnimation = () => {
+    disableEverything = (state) => {
         // disable everything (to avoid user interruption)
         document.querySelectorAll("input").forEach((e) => {
-            e.disabled = true;
+            e.disabled = state;
         });
         document.querySelectorAll("button").forEach((e) => {
-            e.disabled = true;
+            e.disabled = state;
         })
+    }
+
+    showAnimation = () => {
+        // disable the buttons
+        this.disableEverything(true);
 
         let animations = this.getSudokuAnimations(this.state.grid.slice());
         let grid = document.getElementsByClassName("cell");
 
-        if (animations.length === 0)
+        if (animations.length == 0)
             return window.alert("Solution does not exist");
 
         for (let i=0; i<animations.length; i++) {
@@ -44,14 +49,16 @@ class SudokuVisualizer extends Sudoku {
                 let [row, col, value, status] = animations[i];
                 grid[row*9+col].firstChild.value = value;
 
-                if (status) {
+                if (status) 
                     grid[row*9+col].firstChild.style.backgroundColor = "green";
-                }
-                else {
+                else 
                     grid[row*9+col].firstChild.style.backgroundColor = "red";
-                }
+                
             }, this.state.animationSpeed*i);
         }
+
+        //enable the buttons
+        this.disableEverything(false);
     }
 
     handleInputChange = (e, rowIndex, colIndex) => {
@@ -60,13 +67,21 @@ class SudokuVisualizer extends Sudoku {
         this.setState({grid: arr});
     }
 
+    randomNumber = (min, max) => {  
+        min = Math.ceil(min); 
+        max = Math.floor(max); 
+        return Math.floor(Math.random() * (max - min + 1)) + min; 
+    }
+
+
     render() {
         return (
-        <div>
-            <h1>Sudoku Visualizer (backtracking)</h1>
-            <ShowGrid grid={this.state.grid} handleInputChange={this.handleInputChange} />
-            <button type="button" onClick={this.showAnimation}>Solve</button>
-        </div>
+            <div style={{display: "inline-block"}}>
+                <h1>Sudoku Visualizer (backtracking)</h1>
+                <ShowGrid grid={this.state.grid} handleInputChange={this.handleInputChange} />
+                <button type="button" onClick={this.generateSudoku}>Generate Sudoku</button>
+                <button type="button" onClick={this.showAnimation}>Solve</button>
+            </div>
         );
     }
 }
@@ -86,7 +101,7 @@ class ShowGrid extends React.Component {
                 return (
                     <div className="cell">
                         {
-                            value === 0 ? <input key={rowIndex*9+colIndex} className="cell-element" onChange={(e) => {  this.props.handleInputChange(e, rowIndex, colIndex); } } value=" " /> : <input key={rowIndex*9+colIndex} className="cell-element" onChange={(e) => { this.props.handleInputChange(e, rowIndex, colIndex); }} value={value}/>
+                            value == 0 ? <input key={rowIndex*9+colIndex} className="cell-element" onChange={(e) => {  this.props.handleInputChange(e, rowIndex, colIndex); } } value=" " /> : <input key={rowIndex*9+colIndex} className="cell-element" onChange={(e) => { this.props.handleInputChange(e, rowIndex, colIndex); }} value={value}/>
                         }
                     </div>
                 );
