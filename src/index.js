@@ -17,11 +17,10 @@ class SudokuVisualizer extends Sudoku {
                 [1, 3, 0, 0, 0, 0, 2, 5, 0], 
                 [0, 0, 0, 0, 0, 0, 0, 7, 4], 
                 [0, 0, 5, 2, 0, 6, 3, 0, 0]
-            ]
+            ],
+            animationSpeed: 10, // in ms
         };
 
-        // in ms
-        this.ANIMATION_SPEED = 10;
     }
 
     showAnimation = () => {
@@ -40,7 +39,7 @@ class SudokuVisualizer extends Sudoku {
                     grid[row*9+col].firstChild.style.color = "red";
                     grid[row*9+col].style.backgroundColor = "red";
                 }
-            }, this.ANIMATION_SPEED*i);
+            }, this.state.animationSpeed*i);
         }
     }
 
@@ -50,7 +49,7 @@ class SudokuVisualizer extends Sudoku {
                 return (
                     <div className="cell">
                         {
-                            e == 0 ? <span id="cell-element" style={{color: "blue"}}>hah</span> : <span id="cell-element">{e}</span>
+                            e == 0 ? <span id="cell-element" style={{color: "blue"}}>0</span> : <span id="cell-element">{e}</span>
                         }
                     </div>
                 );
@@ -65,6 +64,7 @@ class SudokuVisualizer extends Sudoku {
 
         return (
         <div>
+            <h1>Sudoku Visualizer (backtracking)</h1>
             {showGrid}
             <button type="button" onClick={this.showAnimation}>Solve</button>
         </div>

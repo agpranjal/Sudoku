@@ -1,10 +1,10 @@
 body {
     background-color: black;
     color: white;
+    margin: 0px;
 }
 
 #root {
-    margin: 50px;
     text-align: center;
 }
 
@@ -14,6 +14,7 @@ body {
     background-color: blue;
 
     font-size: 1.3em;
+    font-weight: bold;
     width: 80px;
     height: 80px;
     box-sizing: border-box;
@@ -28,7 +29,9 @@ button {
     margin: 30px;
     padding: 10px;
     background-color: blue;
+    width: 100px;
     color: white;
     font-size: 1.2em;
     cursor: pointer;
+    border-radius: 5px;
 }
