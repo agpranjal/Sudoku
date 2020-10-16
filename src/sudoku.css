@@ -26,6 +26,7 @@ body {
 }
 
 button {
+    outline: none;
     margin: 30px;
     padding: 15px;
     background-color: blue;

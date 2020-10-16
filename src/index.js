@@ -8,16 +8,16 @@ class SudokuVisualizer extends Sudoku {
         super(props);
 
         this.state = {
-            grid:[
-                [3, 0, 6, 5, 0, 8, 4, 0, 0], 
-                [5, 2, 0, 0, 0, 0, 0, 0, 0], 
-                [0, 8, 7, 0, 0, 0, 0, 3, 1], 
-                [0, 0, 3, 0, 1, 0, 0, 8, 0], 
-                [9, 0, 0, 8, 6, 3, 0, 0, 5], 
-                [0, 5, 0, 0, 9, 0, 6, 0, 0], 
-                [1, 3, 0, 0, 0, 0, 2, 5, 0], 
-                [0, 0, 0, 0, 0, 0, 0, 7, 4], 
-                [0, 0, 5, 2, 0, 6, 3, 0, 0]
+            grid: [
+                [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+                [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+                [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+                [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+                [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+                [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+                [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+                [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+                [" ", " ", " ", " ", " ", " ", " ", " ", " "]
             ],
             animationSpeed: 10, // in ms
         };
@@ -41,7 +41,7 @@ class SudokuVisualizer extends Sudoku {
         let animations = this.getSudokuAnimations(this.state.grid.slice());
         let grid = document.getElementsByClassName("cell");
 
-        if (animations.length == 0)
+        if (animations.length === 0)
             return window.alert("Solution does not exist");
 
         for (let i=0; i<animations.length; i++) {
@@ -77,7 +77,7 @@ class SudokuVisualizer extends Sudoku {
     render() {
         return (
             <div style={{display: "inline-block"}}>
-                <h1>Sudoku Visualizer (backtracking)</h1>
+                <h1>Sudoku Visualizer</h1>
                 <ShowGrid grid={this.state.grid} handleInputChange={this.handleInputChange} />
                 <button type="button" onClick={this.generateSudoku}>Generate Sudoku</button>
                 <button type="button" onClick={this.showAnimation}>Solve</button>
@@ -101,7 +101,7 @@ class ShowGrid extends React.Component {
                 return (
                     <div className="cell">
                         {
-                            value == 0 ? <input key={rowIndex*9+colIndex} className="cell-element" onChange={(e) => {  this.props.handleInputChange(e, rowIndex, colIndex); } } value=" " /> : <input key={rowIndex*9+colIndex} className="cell-element" onChange={(e) => { this.props.handleInputChange(e, rowIndex, colIndex); }} value={value}/>
+                            value === " " ? <input key={rowIndex*9+colIndex} className="cell-element" onChange={(e) => {  this.props.handleInputChange(e, rowIndex, colIndex); } } value=" " /> : <input key={rowIndex*9+colIndex} className="cell-element" onChange={(e) => { this.props.handleInputChange(e, rowIndex, colIndex); }} value={value}/>
                         }
                     </div>
                 );

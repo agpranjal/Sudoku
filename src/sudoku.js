@@ -9,7 +9,7 @@ class Sudoku extends React.Component {
         let empty = 0;
         for (let i=0; i<9; i++) {
             for (let j=0; j<9; j++) {
-                if (grid[i][j] == 0)
+                if (grid[i][j] === " ")
                     empty ++;
             }
         }
@@ -22,16 +22,16 @@ class Sudoku extends React.Component {
     }
 
     solveSudoku = (grid, row, col, empty, animations) => {
-        if (empty == 0) 
+        if (empty === 0) 
             return true;
 
-        if (row == 9) 
+        if (row === 9) 
             return false;
 
-        if (col == 9)
+        if (col === 9)
             return this.solveSudoku(grid, row+1, 0, empty, animations);
 
-        if (grid[row][col] == 0) {
+        if (grid[row][col] === " ") {
             for (let i=1; i<=9; i++) {
                 if (this.isValid(grid, row, col, i)) {
                     grid[row][col] = i;
@@ -40,7 +40,7 @@ class Sudoku extends React.Component {
                     if (this.solveSudoku(grid, row, col+1, empty-1, animations))
                         return true;
 
-                    grid[row][col] = 0;
+                    grid[row][col] = " ";
                     animations.push([row, col, " ", false]);
                 }
             }
@@ -65,19 +65,21 @@ class Sudoku extends React.Component {
             e.style.backgroundColor = "blue";
         });
 
+        // temporary array (will contain the generated sudoku)
         let arr = [
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0]
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "]
         ];
 
-        // fill the diagonal sub grids
+        // Improved algorithm to generate a sudoku board
+        // Step 1: fill the diagonal sub grids
         let n;
         let x = 0;
         for (let i=0; i<9; i++) {
@@ -96,24 +98,23 @@ class Sudoku extends React.Component {
             } while (! this.validateSubGrid(arr, i, x+2, n));
             arr[i][x+2] = n;
 
-            if ((i+1)%3 == 0)
+            if ((i+1)%3 === 0)
                 x += 3;
         }
 
-        // recursively fill the rest of the sub grids
+        // Step 2: recursively fill the rest of the sub grids
         this.fillRecursively(arr, 0, 0);
 
-        // randomly remove K elements
+        // Step 3: randomly remove K elements
         let visited = [];
         for (let i=0; i<81; i++)
             visited.push(0);
-
-        let K = 50;
+        let K = this.randomNumber(45, 55);
         while (K--) {
             let n, r, c;
             do {
                 n = this.randomNumber(0, 80);
-            } while (visited[n] == 1);
+            } while (visited[n] === 1);
 
             r = Math.floor(n/9);
             c = Math.floor(n%9);
@@ -127,7 +128,7 @@ class Sudoku extends React.Component {
     validateRow = (grid, row, col, value) => {
         // check validity in row
         for (let i=0; i<9; i++) {
-            if (grid[row][i] == value)
+            if (grid[row][i] === value)
                 return false;
         }
         return true;
@@ -136,7 +137,7 @@ class Sudoku extends React.Component {
     validateColumn = (grid, row, col, value) => {
         // check validity in col
         for (let i=0; i<9; i++) {
-            if (grid[i][col] == value)
+            if (grid[i][col] === value)
                 return false;
         }
         
@@ -156,7 +157,7 @@ class Sudoku extends React.Component {
 
         for (let i of subGrid[r]) {
             for (let j of subGrid[c]) {
-                if (grid[i][j] == value)
+                if (grid[i][j] === value)
                     return false;
             }
         }
