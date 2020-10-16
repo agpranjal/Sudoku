@@ -1,3 +1,18 @@
+# Sudoku
++ Sudoku board generator
++ Sudoku Visualizer (backtracking)
+
+
+## Install nodejs
+Run the following in your terminal:
+
+### `sudo apt install nodejs`
+
+## Install dependencies
+In the project directory, run the following:
+
+### `npm install`
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
