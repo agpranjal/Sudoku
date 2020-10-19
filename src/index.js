@@ -25,17 +25,18 @@ class SudokuVisualizer extends Sudoku {
     }
 
     disableEverything = (state) => {
-        // disable everything (to avoid user interruption)
+        // disable (or enable) everything (to avoid user interaction during animation)
         document.querySelectorAll("input").forEach((e) => {
             e.disabled = state;
         });
+
         document.querySelectorAll("button").forEach((e) => {
             e.disabled = state;
         })
     }
 
     showAnimation = () => {
-        // disable the buttons
+        // disable everything
         this.disableEverything(true);
 
         let animations = this.getSudokuAnimations(this.state.grid.slice());
@@ -53,12 +54,13 @@ class SudokuVisualizer extends Sudoku {
                     grid[row*9+col].firstChild.style.backgroundColor = "green";
                 else 
                     grid[row*9+col].firstChild.style.backgroundColor = "red";
+
+                if (i == animations.length-1)
+                    this.disableEverything(false);
                 
             }, this.state.animationSpeed*i);
         }
 
-        //enable the buttons
-        this.disableEverything(false);
     }
 
     handleInputChange = (e, rowIndex, colIndex) => {
