@@ -2,6 +2,7 @@
 + Sudoku board generator
 + Sudoku Visualizer (backtracking)
 
+#### Test it here: [https://ag-pranjal-sudoku-visualizer.herokuapp.com/](https://ag-pranjal-sudoku-visualizer.herokuapp.com/)
 
 ## Install nodejs
 Run the following in your terminal:
