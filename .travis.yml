@@ -1,0 +1,12 @@
+language: node_js
+node_js: ["stable"]
+
+script:
+  - npm install
+  - npm build
+
+deploy:
+  provider: heroku
+  api_key: ${HEROKU_API_KEY}
+  app:
+    master: ag-pranjal-sudoku-visualizer
