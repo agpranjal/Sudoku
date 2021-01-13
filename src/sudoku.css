@@ -40,3 +40,7 @@ input {
     text-align: center;
     color: white;
 }
+
+input:hover {
+    border: 1px solid white;
+}
