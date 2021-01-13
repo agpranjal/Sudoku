@@ -39,6 +39,7 @@ button {
 input {
     text-align: center;
     color: white;
+    border: 0px;
 }
 
 input:hover {

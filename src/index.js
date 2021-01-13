@@ -97,13 +97,26 @@ class ShowGrid extends React.Component {
     }
 
     render() {
+
         let arr = this.props.grid.map((row, rowIndex) => {
             return row.map((value, colIndex) => {
+                let styles = {};
 
+                if (rowIndex === 2 || rowIndex === 5)
+                    styles.borderBottom = "3px solid black";
+                else
+                    styles.borderBottom = "";
+
+                if (colIndex === 2 || colIndex === 5)
+                    styles.borderRight = "3px solid black";
+                else
+                    styles.borderRight = "";
+
+                console.log(styles);
                 return (
                     <div className="cell">
                         {
-                            value === " " ? <input key={rowIndex*9+colIndex} className="cell-element" onChange={(e) => {  this.props.handleInputChange(e, rowIndex, colIndex); } } value=" " /> : <input key={rowIndex*9+colIndex} className="cell-element" onChange={(e) => { this.props.handleInputChange(e, rowIndex, colIndex); }} value={value}/>
+                            value === " " ? <input style={styles} key={rowIndex*9+colIndex} className="cell-element" onChange={(e) => {  this.props.handleInputChange(e, rowIndex, colIndex); } } value=" " /> : <input key={rowIndex*9+colIndex} style={styles} className="cell-element" onChange={(e) => { this.props.handleInputChange(e, rowIndex, colIndex); }} value={value}/>
                         }
                     </div>
                 );
