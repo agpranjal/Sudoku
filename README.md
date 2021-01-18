@@ -1,4 +1,4 @@
-# Sudoku
+# Sudoku [![Build Status](https://www.travis-ci.com/agpranjal/Sudoku.svg?branch=master)](https://www.travis-ci.com/agpranjal/Sudoku)
 + Sudoku board generator
 + Sudoku Visualizer (backtracking)
 
